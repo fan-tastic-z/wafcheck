@@ -1,12 +1,12 @@
+use anyhow::Result;
 use clap::arg;
 use clap::Parser;
-use regex::Regex;
-use rand::{Rng, thread_rng};
 use rand::distributions::Alphanumeric;
+use rand::{thread_rng, Rng};
+use regex::Regex;
 use reqwest::blocking::Client;
 use serde_json::json;
 use wafcheck::init;
-
 
 const XSSSTRING: &str = r#"<script>alert("XSS");</script>"#;
 // const SQLISTRING: &str = r#"UNION SELECT ALL FROM information_schema AND ' or SLEEP(5) or '"#;
@@ -19,12 +19,11 @@ pub struct Feature {
     pub waf_type: String,
 }
 
-
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
-    #[arg(short,long)]
-    url: String
+    #[arg(short, long)]
+    url: String,
 }
 
 pub fn random_key() -> String {
@@ -33,8 +32,7 @@ pub fn random_key() -> String {
     chars
 }
 
-
-fn main() {
+fn main() -> Result<()> {
     let args = Args::parse();
     println!("url is {}", args.url);
     let key = random_key();
@@ -45,20 +43,15 @@ fn main() {
         }
     );
     let client = Client::new();
-    let body = client
-        .get(args.url)
-        .query(&params)
-        .send()
-        .unwrap()
-        .text()
-        .unwrap();
+    let body = client.get(args.url).query(&params).send()?.text()?;
     let waf_name = plugin_manger.run_check(&body);
     match waf_name {
         Some(waf_name) => {
             println!("Waf Name is {}", waf_name);
-        },
+        }
         None => {
             println!("Waf Name is None");
-        },
+        }
     }
+    Ok(())
 }

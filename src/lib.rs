@@ -5,7 +5,13 @@ use crate::plugins::safeline::Safeline;
 pub mod plugins;
 
 pub struct PluginManager {
-    plugins: Vec<Box<dyn Plugin>>
+    plugins: Vec<Box<dyn Plugin>>,
+}
+
+impl Default for PluginManager {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl PluginManager {
@@ -22,14 +28,20 @@ impl PluginManager {
     pub fn run_check(&self, content: &str) -> Option<String> {
         for plugin in &self.plugins {
             let check = plugin.check(content);
-            if check {
-                return Some(plugin.name());
+            match check {
+                Ok(is_match) => {
+                    if is_match {
+                        return Some(plugin.name());
+                    }
+                }
+                Err(err) => {
+                    eprintln!("try match plugin {} error {}", plugin.name(), err);
+                }
             }
         }
-        return None;
+        None
     }
 }
-
 
 macro_rules! register_plugin {
     ($($plugin:expr),*) => {
@@ -44,7 +56,5 @@ macro_rules! register_plugin {
 }
 
 pub fn init() -> PluginManager {
-    register_plugin!(
-        Safeline::new()
-    )
+    register_plugin!(Safeline::new())
 }
