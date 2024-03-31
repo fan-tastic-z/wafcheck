@@ -1,5 +1,6 @@
 pub mod aliyundun;
 pub mod safeline;
+pub mod tencent;
 
 use anyhow::Result;
 

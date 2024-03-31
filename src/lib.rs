@@ -1,6 +1,6 @@
 use plugins::Plugin;
 
-use crate::plugins::{aliyundun::AliYunDun, safeline::Safeline};
+use crate::plugins::{aliyundun::AliYunDun, safeline::Safeline, tencent::Tencent};
 
 pub mod help;
 pub mod plugins;
@@ -57,5 +57,5 @@ macro_rules! register_plugin {
 }
 
 pub fn init() -> PluginManager {
-    register_plugin!(Safeline::new(), AliYunDun::new())
+    register_plugin!(Safeline::new(), AliYunDun::new(), Tencent::new())
 }
