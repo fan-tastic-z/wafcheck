@@ -1,7 +1,8 @@
 use plugins::Plugin;
 
-use crate::plugins::safeline::Safeline;
+use crate::plugins::{aliyundun::AliYunDun, safeline::Safeline};
 
+pub mod help;
 pub mod plugins;
 
 pub struct PluginManager {
@@ -25,9 +26,9 @@ impl PluginManager {
         self.plugins.push(Box::new(plugin));
     }
 
-    pub fn run_check(&self, content: &str) -> Option<String> {
+    pub fn run_check(&self, content: &str, status: reqwest::StatusCode) -> Option<String> {
         for plugin in &self.plugins {
-            let check = plugin.check(content);
+            let check = plugin.check(content, status);
             match check {
                 Ok(is_match) => {
                     if is_match {
@@ -56,5 +57,5 @@ macro_rules! register_plugin {
 }
 
 pub fn init() -> PluginManager {
-    register_plugin!(Safeline::new())
+    register_plugin!(Safeline::new(), AliYunDun::new())
 }

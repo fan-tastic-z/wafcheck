@@ -1,23 +1,8 @@
 use anyhow::Result;
 use clap::arg;
 use clap::Parser;
-use rand::distributions::Alphanumeric;
-use rand::{thread_rng, Rng};
-use regex::Regex;
-use reqwest::blocking::Client;
-use serde_json::json;
+use wafcheck::help::Help;
 use wafcheck::init;
-
-const XSSSTRING: &str = r#"<script>alert("XSS");</script>"#;
-// const SQLISTRING: &str = r#"UNION SELECT ALL FROM information_schema AND ' or SLEEP(5) or '"#;
-// const LFISTRING: &str = r#"../../../../etc/passwd"#;
-// const RCESTRING: &str = r#"/bin/cat /etc/passwd; ping 127.0.0.1; curl google.com"#;
-// const XXESTRING: &str = r#"<!ENTITY xxe SYSTEM "file:///etc/shadow">]><pwn>&hack;</pwn>"#;
-
-pub struct Feature {
-    pub pattern: Regex,
-    pub waf_type: String,
-}
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -26,25 +11,17 @@ struct Args {
     url: String,
 }
 
-pub fn random_key() -> String {
-    let mut rng = thread_rng();
-    let chars: String = (0..7).map(|_| rng.sample(Alphanumeric) as char).collect();
-    chars
-}
-
 fn main() -> Result<()> {
     let args = Args::parse();
-    println!("url is {}", args.url);
-    let key = random_key();
+
     let plugin_manger = init();
-    let params = json!(
-        {
-            key: XSSSTRING,
-        }
-    );
-    let client = Client::new();
-    let body = client.get(args.url).query(&params).send()?.text()?;
-    let waf_name = plugin_manger.run_check(&body);
+
+    let help = Help::new();
+
+    let resp = help.attack(&args.url)?;
+
+    let status = resp.status();
+    let waf_name = plugin_manger.run_check(&resp.text()?, status);
     match waf_name {
         Some(waf_name) => {
             println!("Waf Name is {}", waf_name);
