@@ -63,3 +63,32 @@ impl Safeline {
         Ok(pattern.is_match(content))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::fs;
+
+    use super::Safeline;
+
+    fn get_html_content() -> String {
+        fs::read_to_string("tests/html/safeline.html").unwrap()
+    }
+
+    #[test]
+    fn test_match_image() {
+        let content = get_html_content();
+        let safeline = Safeline::new();
+
+        let res = safeline.match_image(&content).unwrap();
+        assert!(res)
+    }
+
+    #[test]
+    fn test_match_content() {
+        let content = get_html_content();
+        let safeline = Safeline::new();
+
+        let res = safeline.match_content(&content).unwrap();
+        assert!(res)
+    }
+}

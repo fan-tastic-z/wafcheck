@@ -46,3 +46,24 @@ impl AliYunDun {
         status == StatusCode::METHOD_NOT_ALLOWED
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::fs;
+
+    use super::AliYunDun;
+
+    fn get_html_content() -> String {
+        fs::read_to_string("tests/html/aliyundun.html").unwrap()
+    }
+
+    #[test]
+    fn test_match_content() {
+        let content = get_html_content();
+        let aliuyundun = AliYunDun::new();
+
+        let res = aliuyundun.match_content(&content).unwrap();
+
+        assert!(res)
+    }
+}
