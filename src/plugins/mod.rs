@@ -1,4 +1,6 @@
 pub mod aliyundun;
+pub mod chuangyu;
+pub mod huawei;
 pub mod safeline;
 pub mod tencent;
 

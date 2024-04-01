@@ -26,7 +26,11 @@ impl Default for Help {
 
 impl Help {
     pub fn new() -> Self {
-        let client = reqwest::blocking::Client::builder().build().unwrap();
+        let client = reqwest::blocking::Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .cookie_store(true)
+            .build()
+            .unwrap();
         Help {
             http_client: client,
         }
@@ -49,6 +53,7 @@ impl Help {
     pub fn attack(&self, url: &str) -> Result<reqwest::blocking::Response> {
         let params = self.generate_attack_params();
         let resp = self.http_client.get(url).query(&params).send()?;
+
         Ok(resp)
     }
 }

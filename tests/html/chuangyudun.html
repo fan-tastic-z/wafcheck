@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+body{ background:#eff1f0; font-family: microsoft yahei; color:#969696; font-size:12px;}
+.online-desc-con { text-align:center; }
+.r-tip01 { color: #969696; font-size: 16px; display: block; text-align: center; width: 600px; padding: 0 10px; overflow: hidden; text-overflow: ellipsis; margin: 0 auto 15px; }
+.r-tip02 { color: #b1b0b0; font-size: 12px; display: block; margin-top: 20px; margin-bottom: 20px; }
+.r-tip02 a:visited { text-decoration: underline; color: #0088CC; }
+.r-tip02 a:link { text-decoration: underline; color: #0088CC; }
+img { border: 0; }
+</style>
+</head>
+<body>
+<div class="online-desc-con" style="width:650px;padding-top:15px;margin:34px auto;">
+    <a id="official_site" href="http://www.365cyd.com" target="_blank">
+        <img id="wafblock" alt="" style="margin: 0 auto 17px auto;" />
+    </a>
+    <span class="r-tip01" id="error_403"></span>
+    <span class="r-tip01" id="error_403_en"></span>
+    <span class="r-tip02">如果您是网站管理员<a href="http://help.365cyd.com/cyd-error-help.html?code=403" target="_blank">点击这里</a>查看详情</span>
+    <hr/>
+    <center>client: <span id="client_ip"></span>, server: 679faae, time: <span id="time_error"></span><span id="rule_id"></span></center>
+    <img alt="" src="/cdn-cgi/image/logo.png" />
+</div>
+<script>
+    void(function fuckie6(){if(location.hash && /MSIE 6/.test(navigator.userAgent) && !/jsl_sec/.test(location.href)){location.href = location.href.split('#')[0] + '&jsl_sec' + location.hash}})();
+    var data = {"error_403":"","error_403_en":"Knownsec CloudWAF: Your request has been blocked due to suspected hacking","time_error":"31\/Mar\/2024:21:47:13 +0800","rule_id":"40013","error_403_type":"","client_ip":"117.134.7.233"};
+    var rule_id = parseInt(data['rule_id']) || '';
+    if (rule_id != '') {
+        rule_id = '[' + rule_id + ']';
+    }
+    document.getElementById("wafblock").src = '/cdn-cgi/image/' + (data['error_403_type'] || 'hacker') + '.png';
+    document.getElementById('error_403').innerText = data['error_403'] || '当前访问疑似黑客攻击，已被创宇盾拦截。';
+    document.getElementById('error_403_en').innerText = data['error_403_en'];
+    document.getElementById('client_ip').innerText = data['client_ip'];
+    document.getElementById('time_error').innerText = data['time_error'];
+    document.getElementById('rule_id').innerText = rule_id;
+</script>
+</body>
+</html>
