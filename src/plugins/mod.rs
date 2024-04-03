@@ -5,6 +5,7 @@ pub mod huawei;
 pub mod safeline;
 pub mod tencent;
 pub mod wangzhanbao;
+pub mod wordfence;
 pub mod wts;
 
 use anyhow::Result;

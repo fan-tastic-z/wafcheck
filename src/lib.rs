@@ -2,7 +2,7 @@ use plugins::Plugin;
 
 use crate::plugins::{
     aliyundun::AliYunDun, chuangyu::ChuangYuDun, g01::G01, huawei::HuaWei, safeline::Safeline,
-    tencent::Tencent, wangzhanbao::WangZhanBao, wts::WtsWaf,
+    tencent::Tencent, wangzhanbao::WangZhanBao, wordfence::Wordfence, wts::WtsWaf,
 };
 
 pub mod help;
@@ -77,6 +77,7 @@ pub fn init() -> PluginManager {
         HuaWei::new(),
         WangZhanBao::new(),
         G01::new(),
-        WtsWaf::new()
+        WtsWaf::new(),
+        Wordfence::new()
     )
 }
