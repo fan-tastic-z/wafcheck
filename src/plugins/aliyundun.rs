@@ -11,7 +11,12 @@ pub struct AliYunDun {
 }
 
 impl Plugin for AliYunDun {
-    fn check(&self, content: &str, status: reqwest::StatusCode) -> Result<bool> {
+    fn check(
+        &self,
+        content: &str,
+        status: reqwest::StatusCode,
+        _headers: &reqwest::header::HeaderMap,
+    ) -> Result<bool> {
         if self.match_content(content)? && self.match_status(status) {
             Ok(true)
         } else {

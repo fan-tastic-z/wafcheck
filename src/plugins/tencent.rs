@@ -14,7 +14,12 @@ pub struct Tencent {
 }
 
 impl Plugin for Tencent {
-    fn check(&self, content: &str, _status: reqwest::StatusCode) -> Result<bool> {
+    fn check(
+        &self,
+        content: &str,
+        _status: reqwest::StatusCode,
+        _headers: &reqwest::header::HeaderMap,
+    ) -> Result<bool> {
         if self.match_image(content)? || self.match_content(content)? {
             Ok(true)
         } else {

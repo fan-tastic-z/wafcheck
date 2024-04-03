@@ -2,7 +2,7 @@ use plugins::Plugin;
 
 use crate::plugins::{
     aliyundun::AliYunDun, chuangyu::ChuangYuDun, huawei::HuaWei, safeline::Safeline,
-    tencent::Tencent,
+    tencent::Tencent, wangzhanbao::WangZhanBao,
 };
 
 pub mod help;
@@ -29,9 +29,14 @@ impl PluginManager {
         self.plugins.push(Box::new(plugin));
     }
 
-    pub fn run_check(&self, content: &str, status: reqwest::StatusCode) -> Option<String> {
+    pub fn run_check(
+        &self,
+        content: &str,
+        status: reqwest::StatusCode,
+        headers: &reqwest::header::HeaderMap,
+    ) -> Option<String> {
         for plugin in &self.plugins {
-            let check = plugin.check(content, status);
+            let check = plugin.check(content, status, headers);
             match check {
                 Ok(is_match) => {
                     if is_match {
@@ -65,6 +70,7 @@ pub fn init() -> PluginManager {
         AliYunDun::new(),
         Tencent::new(),
         ChuangYuDun::new(),
-        HuaWei::new()
+        HuaWei::new(),
+        WangZhanBao::new()
     )
 }

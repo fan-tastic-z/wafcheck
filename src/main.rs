@@ -19,9 +19,11 @@ fn main() -> Result<()> {
     let help = Help::new();
 
     let resp = help.attack(&args.url)?;
-
     let status = resp.status();
-    let waf_name = plugin_manger.run_check(&resp.text()?, status);
+    let headers = resp.headers().to_owned();
+    println!("{:?}", headers);
+    let content = resp.text()?;
+    let waf_name = plugin_manger.run_check(&content, status, &headers);
     match waf_name {
         Some(waf_name) => {
             println!("Waf Name is {}", waf_name);
