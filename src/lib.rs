@@ -29,6 +29,10 @@ impl PluginManager {
         self.plugins.push(Box::new(plugin));
     }
 
+    pub fn support_check_wafs(&self) -> Vec<String> {
+        self.plugins.iter().map(|i| i.name()).collect()
+    }
+
     pub fn run_check(
         &self,
         content: &str,
