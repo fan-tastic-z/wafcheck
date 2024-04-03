@@ -21,7 +21,6 @@ fn main() -> Result<()> {
     let resp = help.attack(&args.url)?;
     let status = resp.status();
     let headers = resp.headers().to_owned();
-    println!("{:?}", headers);
     let content = resp.text()?;
     let waf_name = plugin_manger.run_check(&content, status, &headers);
     match waf_name {
