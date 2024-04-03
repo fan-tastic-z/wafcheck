@@ -1,8 +1,8 @@
 use plugins::Plugin;
 
 use crate::plugins::{
-    aliyundun::AliYunDun, chuangyu::ChuangYuDun, huawei::HuaWei, safeline::Safeline,
-    tencent::Tencent, wangzhanbao::WangZhanBao,
+    aliyundun::AliYunDun, chuangyu::ChuangYuDun, g01::G01, huawei::HuaWei, safeline::Safeline,
+    tencent::Tencent, wangzhanbao::WangZhanBao, wts::WtsWaf,
 };
 
 pub mod help;
@@ -71,6 +71,8 @@ pub fn init() -> PluginManager {
         Tencent::new(),
         ChuangYuDun::new(),
         HuaWei::new(),
-        WangZhanBao::new()
+        WangZhanBao::new(),
+        G01::new(),
+        WtsWaf::new()
     )
 }
