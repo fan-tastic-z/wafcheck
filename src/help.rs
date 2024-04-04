@@ -29,6 +29,7 @@ impl Help {
         let client = reqwest::blocking::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
             .cookie_store(true)
+            .danger_accept_invalid_certs(true)
             .build()
             .unwrap();
         Help {
