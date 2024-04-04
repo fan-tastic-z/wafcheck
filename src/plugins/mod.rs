@@ -1,6 +1,7 @@
 pub mod aliyundun;
 pub mod bt;
 pub mod chuangyu;
+pub mod cloudfront;
 pub mod g01;
 pub mod huawei;
 pub mod ninjafirewall;
