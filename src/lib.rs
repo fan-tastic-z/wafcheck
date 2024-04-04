@@ -1,4 +1,5 @@
 use plugins::Plugin;
+use rayon::prelude::*;
 
 use crate::plugins::{
     aliyundun::AliYunDun, bt::Bt, chuangyu::ChuangYuDun, g01::G01, huawei::HuaWei,
@@ -40,20 +41,21 @@ impl PluginManager {
         status: reqwest::StatusCode,
         headers: &reqwest::header::HeaderMap,
     ) -> Option<String> {
-        for plugin in &self.plugins {
-            let check = plugin.check(content, status, headers);
-            match check {
-                Ok(is_match) => {
-                    if is_match {
-                        return Some(plugin.name());
+        let result: Option<String> = self
+            .plugins
+            .par_iter()
+            .find_any(|plugin| {
+                let check = plugin.check(content, status, headers);
+                match check {
+                    Ok(is_match) => is_match,
+                    Err(err) => {
+                        eprintln!("try match plugin {} error {}", plugin.name(), err);
+                        false
                     }
                 }
-                Err(err) => {
-                    eprintln!("try match plugin {} error {}", plugin.name(), err);
-                }
-            }
-        }
-        None
+            })
+            .map(|plugin| plugin.name());
+        result
     }
 }
 

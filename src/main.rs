@@ -35,7 +35,6 @@ fn main() -> Result<()> {
     let help = Help::new();
     if let Some(url) = args.url {
         let mut table = Table::new();
-        // table.set_header(vec!["Check Waf Type"]);
 
         let normal_resp = help.normal_request(&url)?;
         let normal_status = normal_resp.status().as_u16().to_string();

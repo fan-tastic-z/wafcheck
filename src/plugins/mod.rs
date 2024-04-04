@@ -14,7 +14,7 @@ pub mod wts;
 
 use anyhow::Result;
 
-pub trait Plugin {
+pub trait Plugin: Send + Sync {
     fn check(
         &self,
         content: &str,
