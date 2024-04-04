@@ -1,11 +1,10 @@
+use super::Plugin;
 use anyhow::{anyhow, Context, Result};
-use crypto::{digest::Digest, md5::Md5};
 use regex::Regex;
 use scraper::{Html, Selector};
+use sha2::{Digest, Sha256};
 
-use super::Plugin;
-
-const IMAGEMD5: &str = "f79fbcb5676210e31ec56b5565ab2d02";
+const SHAVALUE: &str = "1d48caed40d73ddf5f1f000e8589cece22e43dc794788d6a4dec4b300e23835a";
 
 #[derive(Debug)]
 pub struct G01 {
@@ -56,10 +55,11 @@ impl G01 {
         let image_selector =
             Selector::parse("img.logo").map_err(|err| anyhow!("parse html error {}", err))?;
         for element in document.select(&image_selector) {
-            let mut hasher = Md5::new();
+            let mut hasher = Sha256::new();
             if let Some(img_src) = element.value().attr("src") {
-                hasher.input_str(img_src);
-                if hasher.result_str() == IMAGEMD5 {
+                hasher.update(img_src);
+                let res = format!("{:x}", hasher.finalize());
+                if res == SHAVALUE {
                     return Ok(true);
                 }
             }

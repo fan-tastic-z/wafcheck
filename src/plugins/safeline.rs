@@ -3,12 +3,13 @@ use anyhow::anyhow;
 use anyhow::Context;
 use anyhow::Ok;
 use anyhow::Result;
-use crypto::{digest::Digest, md5::Md5};
 use regex::Regex;
 use scraper::{Html, Selector};
+use sha2::Digest;
+use sha2::Sha256;
 
-// safeline waf img md5
-const IMAGEMD5: &str = "a2c06ca7f40785c8ea28aab8756e4dea";
+// safeline waf img sha256
+const SHAVALUE: &str = "81f620c6a25e7c0f51d78c891dba694884c8345b63a76ecf97b0885a1d9c6b26";
 
 #[derive(Debug)]
 pub struct Safeline {
@@ -52,10 +53,11 @@ impl Safeline {
         let image_selector =
             Selector::parse("img[alt=拦截]").map_err(|err| anyhow!("parse html error {}", err))?;
         for element in document.select(&image_selector) {
-            let mut hasher = Md5::new();
+            let mut hasher = Sha256::new();
             if let Some(img_src) = element.value().attr("src") {
-                hasher.input_str(img_src);
-                if hasher.result_str() == IMAGEMD5 {
+                hasher.update(img_src);
+                let res = format!("{:x}", hasher.finalize());
+                if res == SHAVALUE {
                     return Ok(true);
                 }
             }
