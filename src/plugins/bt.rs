@@ -36,7 +36,7 @@ impl Default for Bt {
 impl Bt {
     pub fn new() -> Self {
         Bt {
-            name: "宝塔网站防火墙免费版".to_string(),
+            name: "bt free (bt.cn)".to_string(),
         }
     }
 

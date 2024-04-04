@@ -2,8 +2,8 @@ use plugins::Plugin;
 use rayon::prelude::*;
 
 use crate::plugins::{
-    aliyundun::AliYunDun, bt::Bt, chuangyu::ChuangYuDun, cloudfront::CloudFront, g01::G01,
-    huawei::HuaWei, ninjafirewall::NinjaFirewall, safe3::Safe3, safedog::SafeDog,
+    aliyundun::AliYunDun, awswaf::AwsWaf, bt::Bt, chuangyu::ChuangYuDun, cloudfront::CloudFront,
+    g01::G01, huawei::HuaWei, ninjafirewall::NinjaFirewall, safe3::Safe3, safedog::SafeDog,
     safeline::Safeline, tencent::Tencent, wangzhanbao::WangZhanBao, wordfence::Wordfence,
     wts::WtsWaf,
 };
@@ -87,6 +87,7 @@ pub fn init() -> PluginManager {
         Bt::new(),
         Safe3::new(),
         NinjaFirewall::new(),
-        CloudFront::new()
+        CloudFront::new(),
+        AwsWaf::new()
     )
 }
