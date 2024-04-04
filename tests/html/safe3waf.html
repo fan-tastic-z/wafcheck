@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>非法访问</title>
+  <style type="text/css">
+
+.logo{ background-image: url("data:image/png;base64,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");}
+
+  html,body,div{
+    padding: 0;
+    margin: 0;
+    font-family: "微软雅黑";
+  }
+
+  .header{
+    position: relative;
+    width: 100%;
+    height: 8rem;
+    margin-top:4.4rem;
+    background: #f7f7f7;
+  }
+
+  .wrapper{
+    position: relative;
+    width: 100%;
+    margin-top:2rem;
+    background: pink;
+  }
+
+  .info,
+  .content{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+
+  .info{
+
+      width: 56%;
+      height: 6rem;
+
+      margin-left: -28%;
+      margin-top: -3rem;
+      /*background: orange;*/
+  }
+
+  .content{
+
+      width: 42%;
+      height: auto;
+
+      margin-left: -21%;
+      margin-top: -3rem;
+      border: 1px solid rgba(52, 128, 162, 0.8);
+      margin-top: 6rem;
+  }
+
+  .copyright{
+  position: absolute;
+    left: 50%;
+    margin-left: -79px;
+    width: 158px;
+    margin-top: 20px;
+
+    /* background: orange; */
+  }
+
+    .small-logo{
+      float: left;
+      display: inline-block;
+                  width: 56px;
+            height: 56px;
+            background-repeat: no-repeat;
+    background-size: 46%;
+    }
+
+    .copyright span{
+      font-size: 18px;
+      display: inline-block;
+      color: rgb(180, 180, 180);
+
+    }
+
+    .copyright-text{
+      float: left;
+      margin-left: -28px;
+      margin-top: 2px;
+    }
+
+.info p {
+  padding-top: 3rem;
+  text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color:rgb(120,20,20);
+}
+
+.content ul{
+  list-style: none;
+}
+
+.content ul li{
+
+  line-height: 18px;
+}
+
+.content ul li label{
+  font-size: 14px;
+  width: 6rem;
+  display: inline-block;
+  text-align: right;
+  color: #555;
+
+}
+
+.content ul li .detail{
+  position: relative;
+  font-size: 12px;
+  width: 74%;
+  left: 7rem;
+  top: -18px;
+  word-wrap: break-word;
+}
+
+.picWrapper {
+    width: 152px;
+    height: 152px;
+    position: absolute;
+    left: 50%;
+    margin-left: -76px;
+    top: 50%;
+    margin-top: -76px;
+}
+
+
+.logo {
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+</style>
+
+</head>
+<body>
+  <div class="header">
+       <div class="picWrapper">
+       <div class="logo"></div></div>
+  </div>
+
+  <div class="wrapper">
+    <div class="info">
+      <p>您的访问可能会对网站造成危害，已被管理员设置拦截</p>
+    </div>
+
+    <div class="content">
+     <ul>
+       <li><label>当前网址:</label><div class="detail">xxx/main/index.aspx</div></li>
+       <li><label>客户端特征:</label><div class="detail">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36</div></li>
+       <li><label>拦截时间:</label><div class="detail">2024-04-04 18:54:33  </div></li>
+     </ul>
+  </div>
+
+
+</div>
+
+
+</body>
+</html>

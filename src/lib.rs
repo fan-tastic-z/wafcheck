@@ -1,7 +1,7 @@
 use plugins::Plugin;
 
 use crate::plugins::{
-    aliyundun::AliYunDun, bt::Bt, chuangyu::ChuangYuDun, g01::G01, huawei::HuaWei,
+    aliyundun::AliYunDun, bt::Bt, chuangyu::ChuangYuDun, g01::G01, huawei::HuaWei, safe3::Safe3,
     safedog::SafeDog, safeline::Safeline, tencent::Tencent, wangzhanbao::WangZhanBao,
     wordfence::Wordfence, wts::WtsWaf,
 };
@@ -81,6 +81,7 @@ pub fn init() -> PluginManager {
         WtsWaf::new(),
         Wordfence::new(),
         SafeDog::new(),
-        Bt::new()
+        Bt::new(),
+        Safe3::new()
     )
 }
