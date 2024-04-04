@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, time};
 
 use anyhow::Result;
 use lazy_static::lazy_static;
@@ -51,9 +51,23 @@ impl Help {
         map
     }
 
+    pub fn normal_request(&self, url: &str) -> Result<reqwest::blocking::Response> {
+        let resp = self
+            .http_client
+            .get(url)
+            .timeout(time::Duration::from_secs(5))
+            .send()?;
+        Ok(resp)
+    }
+
     pub fn attack(&self, url: &str) -> Result<reqwest::blocking::Response> {
         let params = self.generate_attack_params();
-        let resp = self.http_client.get(url).query(&params).send()?;
+        let resp = self
+            .http_client
+            .get(url)
+            .query(&params)
+            .timeout(time::Duration::from_secs(5))
+            .send()?;
 
         Ok(resp)
     }

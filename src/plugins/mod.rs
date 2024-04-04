@@ -3,6 +3,7 @@ pub mod bt;
 pub mod chuangyu;
 pub mod g01;
 pub mod huawei;
+pub mod ninjafirewall;
 pub mod safe3;
 pub mod safedog;
 pub mod safeline;
