@@ -2,6 +2,7 @@ pub mod aliyundun;
 pub mod awswaf;
 pub mod bt;
 pub mod chuangyu;
+pub mod cloudflare;
 pub mod cloudfront;
 pub mod g01;
 pub mod huawei;
