@@ -4,8 +4,8 @@ use rayon::prelude::*;
 use crate::plugins::{
     aliyundun::AliYunDun, awswaf::AwsWaf, bt::Bt, chuangyu::ChuangYuDun, cloudflare::CloudFlare,
     cloudfront::CloudFront, g01::G01, huawei::HuaWei, kona::Kona, ninjafirewall::NinjaFirewall,
-    safe3::Safe3, safedog::SafeDog, safeline::Safeline, tencent::Tencent, wangzhanbao::WangZhanBao,
-    wordfence::Wordfence, wts::WtsWaf,
+    safe3::Safe3, safedog::SafeDog, safeline::Safeline, tencent::Tencent, wangsu::WangSu,
+    wangzhanbao::WangZhanBao, wordfence::Wordfence, wts::WtsWaf,
 };
 
 pub mod help;
@@ -90,6 +90,7 @@ pub fn init() -> PluginManager {
         CloudFront::new(),
         AwsWaf::new(),
         Kona::new(),
-        CloudFlare::new()
+        CloudFlare::new(),
+        WangSu::new()
     )
 }

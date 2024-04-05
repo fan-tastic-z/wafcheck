@@ -12,6 +12,7 @@ pub mod safe3;
 pub mod safedog;
 pub mod safeline;
 pub mod tencent;
+pub mod wangsu;
 pub mod wangzhanbao;
 pub mod wordfence;
 pub mod wts;
