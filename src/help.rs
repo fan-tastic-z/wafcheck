@@ -31,7 +31,6 @@ impl Help {
         headers.insert("User-Agent", header::HeaderValue::from_static("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"));
         let client = reqwest::blocking::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
-            .cookie_store(true)
             .danger_accept_invalid_certs(true)
             .default_headers(headers)
             .build()

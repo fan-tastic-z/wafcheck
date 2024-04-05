@@ -13,9 +13,10 @@ impl Plugin for HuaWei {
         &self,
         content: &str,
         _status: reqwest::StatusCode,
-        _headers: &reqwest::header::HeaderMap,
+        headers: &reqwest::header::HeaderMap,
     ) -> Result<bool> {
-        if self.match_content(content)? {
+        println!("{:?}", headers);
+        if self.match_content(content)? || self.match_set_cookie(headers)? {
             Ok(true)
         } else {
             Ok(false)
@@ -43,6 +44,17 @@ impl HuaWei {
     fn match_content(&self, content: &str) -> Result<bool> {
         let pattern = Regex::new(r"HuaweiCloudWAF").context("Huawei new regex error")?;
         Ok(pattern.is_match(content))
+    }
+
+    pub fn match_set_cookie(&self, headers: &reqwest::header::HeaderMap) -> Result<bool> {
+        let set_cookie = headers.get_all(reqwest::header::SET_COOKIE);
+        if let Some(v) = set_cookie.into_iter().next() {
+            let patterns = [r"HWWAFSESTIME", r"HWWAFSESID"];
+            let combined_pattern = patterns.join("|");
+            let pattern = Regex::new(&combined_pattern).context("Huawei waf new regex error")?;
+            return Ok(pattern.is_match(v.to_str()?));
+        }
+        Ok(false)
     }
 }
 
