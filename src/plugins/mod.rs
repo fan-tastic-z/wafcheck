@@ -5,6 +5,7 @@ pub mod chuangyu;
 pub mod cloudfront;
 pub mod g01;
 pub mod huawei;
+pub mod kona;
 pub mod ninjafirewall;
 pub mod safe3;
 pub mod safedog;

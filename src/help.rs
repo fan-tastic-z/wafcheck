@@ -3,6 +3,7 @@ use std::{collections::HashMap, time};
 use anyhow::Result;
 use lazy_static::lazy_static;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
+use reqwest::header;
 
 lazy_static! {
     static ref ATTACKVALUE: Vec<&'static str> = vec![
@@ -26,10 +27,13 @@ impl Default for Help {
 
 impl Help {
     pub fn new() -> Self {
+        let mut headers = header::HeaderMap::new();
+        headers.insert("User-Agent", header::HeaderValue::from_static("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"));
         let client = reqwest::blocking::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
             .cookie_store(true)
             .danger_accept_invalid_certs(true)
+            .default_headers(headers)
             .build()
             .unwrap();
         Help {
