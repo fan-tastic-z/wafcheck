@@ -1,6 +1,6 @@
 use std::{collections::HashMap, time};
 
-use anyhow::Result;
+use anyhow::{Context, Result};
 use lazy_static::lazy_static;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use reqwest::header;
@@ -59,7 +59,8 @@ impl Help {
             .http_client
             .get(url)
             .timeout(time::Duration::from_secs(5))
-            .send()?;
+            .send()
+            .context("send normal request error")?;
         Ok(resp)
     }
 
@@ -70,7 +71,8 @@ impl Help {
             .get(url)
             .query(&params)
             .timeout(time::Duration::from_secs(5))
-            .send()?;
+            .send()
+            .context("send attack request error")?;
 
         Ok(resp)
     }
