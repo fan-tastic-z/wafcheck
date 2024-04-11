@@ -15,7 +15,6 @@ impl Plugin for HuaWei {
         _status: reqwest::StatusCode,
         headers: &reqwest::header::HeaderMap,
     ) -> Result<bool> {
-        println!("{:?}", headers);
         if self.match_content(content)? || self.match_set_cookie(headers)? {
             Ok(true)
         } else {

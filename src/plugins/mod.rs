@@ -4,6 +4,7 @@ pub mod bt;
 pub mod chuangyu;
 pub mod cloudflare;
 pub mod cloudfront;
+pub mod dynamic_web;
 pub mod g01;
 pub mod huawei;
 pub mod kona;

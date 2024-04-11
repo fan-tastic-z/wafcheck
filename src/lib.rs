@@ -3,9 +3,9 @@ use rayon::prelude::*;
 
 use crate::plugins::{
     aliyundun::AliYunDun, awswaf::AwsWaf, bt::Bt, chuangyu::ChuangYuDun, cloudflare::CloudFlare,
-    cloudfront::CloudFront, g01::G01, huawei::HuaWei, kona::Kona, ninjafirewall::NinjaFirewall,
-    safe3::Safe3, safedog::SafeDog, safeline::Safeline, tencent::Tencent, wangsu::WangSu,
-    wangzhanbao::WangZhanBao, wordfence::Wordfence, wts::WtsWaf,
+    cloudfront::CloudFront, dynamic_web::DynamicWeb, g01::G01, huawei::HuaWei, kona::Kona,
+    ninjafirewall::NinjaFirewall, safe3::Safe3, safedog::SafeDog, safeline::Safeline,
+    tencent::Tencent, wangsu::WangSu, wangzhanbao::WangZhanBao, wordfence::Wordfence, wts::WtsWaf,
 };
 
 pub mod help;
@@ -91,6 +91,7 @@ pub fn init() -> PluginManager {
         AwsWaf::new(),
         Kona::new(),
         CloudFlare::new(),
-        WangSu::new()
+        WangSu::new(),
+        DynamicWeb::new()
     )
 }
